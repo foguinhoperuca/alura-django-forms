@@ -1,22 +1,26 @@
 from datetime import datetime
-from django.forms import Form, CharField, DateField, TextInput, ChoiceField, Select, Textarea, BooleanField, CheckboxInput, DecimalField, NumberInput, EmailField, EmailInput, ValidationError
+from django.forms import ModelForm, CharField, DateField, TextInput, ChoiceField, Select, Textarea, BooleanField, CheckboxInput, DecimalField, NumberInput, EmailField, EmailInput, ValidationError
 from tempus_dominus.widgets import DatePicker
-from tickets.util import validate_origin_destiny, validate_start_end_dates, validate_start_date, scale_correct
-from tickets.models import travel_classes, places
+from tickets.util import validate_origin_destiny, validate_start_end_dates, validate_start_date, scale_correct, places
+from tickets.models import Ticket, Person
 
 
-class TicketForms(Form):
-    origin = ChoiceField(label='Origin', choices=places)  # css in html
-    destiny = ChoiceField(label='Destiny', choices=places, widget=Select(attrs={'class': 'form-control'}))
-    start_date = DateField(label='Start', widget=DatePicker())
-    end_date = DateField(label='End', required=False, widget=DatePicker())
+class TicketForms(ModelForm):
     search_date = DateField(label='Search Date', disabled=True, initial=datetime.today, widget=DatePicker())
-    travel_class = ChoiceField(label='Travel Class', choices=travel_classes,
-                               widget=Select(attrs={'class': 'form-control'}))
-    information = CharField(label='Extra Information', max_length=200, widget=Textarea(attrs={'class': 'form-control'}))
-    email = EmailField(label='E-mail', required=False, max_length=150, widget=EmailInput(attrs={'class': 'form-control'}))
-    urgent = BooleanField(label='Urgent?!', required=False, widget=CheckboxInput(attrs={'class': 'form-control'}))
-    scale = DecimalField(label='How much urgent: 1 - 5', required=False, widget=NumberInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+        labels = {
+            'start_date': 'Start Date',
+            'end_date': 'End Date',
+            'travel_class': 'Travel Class',
+            'information': 'Extra Information',
+        }
+        widgets = {
+            'start_date': DatePicker(),
+            'end_date': DatePicker()
+        }
 
     def clean_information(self):
         information = self.cleaned_data.get('information')
@@ -48,3 +52,9 @@ class TicketForms(Form):
                 self.add_error(error, error_list[error])
 
         return self.cleaned_data
+
+
+class PersonForms(ModelForm):
+    class Meta:
+        model = Person
+        exclude = ['name']

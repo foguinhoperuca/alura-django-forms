@@ -20,3 +20,13 @@ def scale_correct(scale):
         valid = True
 
     return valid
+
+
+places = {
+    (1, 'SP'),
+    (2, 'MG'),
+    (3, 'BA'),
+    (4, 'ES'),
+    (5, 'RJ'),
+    (6, 'SC')
+}
