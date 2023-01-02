@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p>Your origin is: {{form.origin.value}}</p>
+<p>Your destiny is: {{form.destiny.value}}</p>
+<p>Your Start Date is: {{form.start_date.value}}</p>
+<p>Your End Date is: {{form.end_date.value}}</p>
+
+<hr />
+
+<p>Your search_date is: {{form.search_date.value}}</p>
+<p>Your travel_class is: {{form.travel_class.value}}</p>
+<p>Your information is: {{form.information.value}}</p>
+<p>Your email is: {{form.email.value}}</p>
+
+<hr />
+
+<p>Your urgent is: {{form.urgent.value}}</p>
+<p>Your scale is: {{form.scale.value}}</p>
+
+{% endblock %}

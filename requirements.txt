@@ -1,0 +1,9 @@
+Django
+python-dotenv
+termcolor
+psycopg2
+psycopg2-binary
+pylint-django
+Pillow
+django-tempus-dominus
+django-widget-tweaks
